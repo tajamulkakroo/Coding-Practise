@@ -1,0 +1,152 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+
+class HotelRoomBookingSystem{
+
+
+//store all our bookings = roomno , customername
+  HashMap<String, String> roomBookings = new HashMap<>();
+   String[][] totalHotelRoom = new String[10][26];//empty?
+   String[] roomNames = 
+{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+  int totalCoinCollected= 0;
+  
+
+  // to populate the 2D matrix we created with all the room id
+  public void populateHotelRooms(){
+    for(int floor = 0; floor <=9 ; floor++){//floor = 0<9 true
+      for(int roomName = 0; roomName <=25; roomName++){//roomName = 1<25 true
+       totalHotelRoom[floor][roomName] = floor + roomNames[roomName];//0A,0B
+      }
+    }
+  }
+
+    public void displayHotelRooms(){
+    for(int floor = 0; floor <=9 ; floor++){//floor = 0<9 true
+      for(int roomName = 0; roomName <=25; roomName++){//roomName = 1<25 true
+       System.out.print(totalHotelRoom[floor][roomName]+" ");
+      }
+    }
+    }
+
+  public void bookHotelRooms(String roomNumber , String customerName) {
+      roomBookings.put(roomNumber , customerName);
+        totalCoinCollected++;
+    
+  }
+
+
+  public int getTotalActiveBooking(){
+      return roomBookings.size();//return int value
+  }
+  
+  
+
+  public int getTotalCoinsCollected(){
+      return totalCoinCollected ;
+  }
+
+
+  public void displayRoomBookedAndCustomerName(){
+    for(String s: roomBookings.keySet()){
+      System.out.println(s+" "+ roomBookings.get(s));
+    }
+  }
+
+
+  public void checkoutCustomer(String roomId){//7D - can we take roomName instead ?
+   for(String Id : roomBookings.keySet()){//5E,1B,0A,7D
+
+   if(Id.equals(roomId)){//7D.equals7D = true
+               roomBookings.remove(roomId);
+               break;
+           }
+       }
+   }
+
+
+  public String getCustomerNameByRoomBooked(String roomNumber){//can we take roomName instead as inout? if yes why?
+  for(String key : roomBookings.keySet()){//
+          if(key.equals(roomNumber)){//5e == 5e
+              String customerNameInMap = roomBookings.get(key);
+              return "The room for customer is: " + customerNameInMap;
+          }
+      }
+      return "Room-Id not found";
+  }
+
+  
+  
+
+    
+   public static void main(String[] args){
+     
+     HotelRoomBookingSystem crioHotels = new HotelRoomBookingSystem();
+
+
+     crioHotels.populateHotelRooms();
+      crioHotels.displayHotelRooms();     
+
+    Scanner sc = new Scanner(System.in);
+      System.out.println("                          " + "Please Enter How many Customer needs to checkin:");
+     int totalCustomerCount = sc.nextInt();//3
+     
+     for(int i = 0; i<totalCustomerCount; i++){
+       System.out.println("please enter your floor no:");
+       int floorNo = sc.nextInt();
+       System.out.println("please enter your room name:");
+       String roomName = sc.next();
+       System.out.println("please enter your name:");
+      String customerName = sc.next();
+       crioHotels.bookHotelRooms(floorNo + roomName , customerName);
+
+     }
+     System.out.println("total active bookings" + crioHotels.getTotalActiveBooking());
+       System.out.println("total coins collected "+crioHotels.getTotalCoinsCollected());
+
+       crioHotels.displayRoomBookedAndCustomerName();
+
+       System.out.println("Please Enter The roomID of Customer To Checkout:");
+        //String customerName= sc.next();//preeti
+       String roomId = sc.next();//7D
+       crioHotels.checkoutCustomer(roomId);
+       //crioHotels.checkoutCustomer(customerName);
+
+
+     System.out.println("Total active booking after checkout: " +  crioHotels.getTotalActiveBooking());
+
+     System.out.println("total coins collected so far" + crioHotels.getTotalCoinsCollected());
+    
+  crioHotels.displayRoomBookedAndCustomerName();
+
+       System.out.println("Please Enter The Room Number To Search:");
+      String roomNumber = sc.next();
+       
+  System.out.println(crioHotels.getCustomerNameByRoomBooked(roomNumber));
+       
+       
+     
+     
+   }
+    
+
+
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+}
